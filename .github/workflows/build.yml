@@ -1,20 +1,37 @@
-name: build
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+name: Build and Deploy SRD on GitHub Pages
 on: push
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: ruby/setup-ruby@v1
+      - name: Build page with Jekyll
+        uses: actions/jekyll-build-pages@v1-beta
         with:
-          ruby-version: 3.1.1
-          bundler-cache: true
-      - name: Install dependencies
-        run: |
-          bundle install --path=vendor/bundle
-      - name: Build site
-        run: bundle exec jekyll build --profile --trace
-        env:
-          JEKYLL_ENV: production
-          JEKYLL_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PAGES_REPO_NWO: ${{github.repository}}
+          source: ./
+          destination: ./_site
+          future: false
+      - name: Archive build output
+        run: tar --dereference --hard-dereference --directory _site/ -cvf artifact.tar .
+      - name: Upload Artifact
+        uses: actions/upload-artifact@main
+        with:
+          name: github-pages
+          path: ./artifact.tar
+          if-no-files-found: warn
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: "Deploy to GitHub Pages"
+        id: deployment
+        uses: actions/deploy-pages@v1-beta
