@@ -3,22 +3,24 @@ permissions:
   pages: write
   id-token: write
 
-name: Build and Deploy SRD on GitHub Pages
+name: Build and deploy SRD on GitHub Pages
 on: push
+
+# Workflow with two jobs: "Build" then "Deploy"
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
       - name: Build page with Jekyll
         uses: actions/jekyll-build-pages@v1-beta
         with:
           source: ./
           destination: ./_site
-          future: false
       - name: Archive build output
         run: tar --dereference --hard-dereference --directory _site/ -cvf artifact.tar .
-      - name: Upload Artifact
+      - name: Upload artifact
         uses: actions/upload-artifact@main
         with:
           name: github-pages
