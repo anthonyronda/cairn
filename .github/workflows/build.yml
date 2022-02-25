@@ -4,7 +4,7 @@ permissions:
   id-token: write
 
 name: Build and deploy SRD on GitHub Pages
-on: push
+on: [push, workflow_dispatch]
 
 # Workflow with two jobs: "Build" then "Deploy"
 jobs:
