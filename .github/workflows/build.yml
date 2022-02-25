@@ -8,7 +8,25 @@ on: [push, workflow_dispatch]
 
 # Workflow with two jobs: "Build" then "Deploy"
 jobs:
+  fetch-dataset:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Fetch dataset
+        uses: sanity-io/github-action-sanity@v0.2-alpha
+        env:
+          SANITY_AUTH_TOKEN: ${{ secrets.SANITY_AUTH_TOKEN }}
+        with:
+          args: dataset export production backups/backup.tar.gz
+      - name: Upload backup.tar.gz
+        uses: actions/upload-artifact@v2
+        with:
+          name: backup-tarball
+          path: backups/backup.tar.gz
+          # Fails the workflow if no files are found; defaults to 'warn'
+          if-no-files-found: error
   build:
+    needs: fetch-dataset
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
