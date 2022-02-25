@@ -13,10 +13,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Fetch dataset
-        uses: sanity-io/github-action-sanity@v0.2-alpha
+        uses: anthonyronda/github-action-sanity@v0.2-alpha
         env:
           SANITY_AUTH_TOKEN: ${{ secrets.SANITY_AUTH_TOKEN }}
         with:
+          SANITY_WORKING_DIRECTORY: ./cairn-content-schema
           args: dataset export production backups/backup.tar.gz
       - name: Upload backup.tar.gz
         uses: actions/upload-artifact@v2
