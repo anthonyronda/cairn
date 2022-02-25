@@ -1,0 +1,3 @@
+[submodule "cairn-content-schema"]
+	path = cairn-content-schema
+	url = git@github.com:anthonyronda/cairn-content-schema.git
