@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Fetch dataset
-        uses: anthonyronda/github-action-sanity@v0.2-alpha
+        uses: anthonyronda/github-action-sanity@master
         env:
           SANITY_AUTH_TOKEN: ${{ secrets.SANITY_AUTH_TOKEN }}
         with:
