@@ -15,16 +15,16 @@ jobs:
         with:
           submodules: recursive
       - name: Fetch dataset
-        uses: sanity-io/github-action-sanity@v0.3
+        uses: anthonyronda/github-action-sanity@v0.4-alpha
         env:
           SANITY_AUTH_TOKEN: ${{ secrets.SANITY_AUTH_TOKEN }}
         with:
-          args: "./cairn-content-schema dataset export production backups/backup.tar.gz"
+          args: "./cairn-content-schema dataset export production backup.tar.gz"
       - name: Upload backup.tar.gz
         uses: actions/upload-artifact@v2
         with:
           name: backup-tarball
-          path: backups/backup.tar.gz
+          path: backup.tar.gz
           # Fails the workflow if no files are found; defaults to 'warn'
           if-no-files-found: error
   build:
