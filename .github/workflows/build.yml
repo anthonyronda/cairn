@@ -12,8 +12,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        with:
+          submodules: recursive
       - name: Fetch dataset
-        uses: anthonyronda/github-action-sanity@v0.3
+        uses: sanity-io/github-action-sanity@v0.3
         env:
           SANITY_AUTH_TOKEN: ${{ secrets.SANITY_AUTH_TOKEN }}
         with:
