@@ -18,7 +18,7 @@ jobs:
           SANITY_AUTH_TOKEN: ${{ secrets.SANITY_AUTH_TOKEN }}
         with:
           sanity_directory: ./cairn-content-schema
-          args: dataset export production backups/backup.tar.gz
+          sanity_args: dataset export production backups/backup.tar.gz
       - name: Upload backup.tar.gz
         uses: actions/upload-artifact@v2
         with:
