@@ -24,7 +24,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: backup-documents-json
-          path: /_data/documents.json
+          path: ./_data/documents.json
           # Fails the workflow if no files are found; defaults to 'warn'
           if-no-files-found: error
   build:
