@@ -33,6 +33,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - uses: actions/download-artifact@v2
+          with:
+            name: backup-documents-json
+            path: ./_data/documents.json
       - name: Build page with Jekyll
         uses: actions/jekyll-build-pages@v1-beta
         with:
