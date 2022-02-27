@@ -8,7 +8,7 @@ on: [push, workflow_dispatch]
 
 # Workflow with two jobs: "Build" then "Deploy"
 jobs:
-  fetch-dataset:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -20,23 +20,6 @@ jobs:
           SANITY_AUTH_TOKEN: ${{ secrets.SANITY_AUTH_TOKEN }}
         with:
           args: "./cairn-content-schema documents query '*' > ../_data/documents.json"
-      - name: Upload documents.json
-        uses: actions/upload-artifact@v2
-        with:
-          name: backup-documents-json
-          path: ./_data/documents.json
-          # Fails the workflow if no files are found; defaults to 'warn'
-          if-no-files-found: error
-  build:
-    needs: fetch-dataset
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - uses: actions/download-artifact@v2
-        with:
-          name: backup-documents-json
-          path: ./_data/documents.json
       - name: Build page with Jekyll
         uses: actions/jekyll-build-pages@v1-beta
         with:
