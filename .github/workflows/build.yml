@@ -19,12 +19,12 @@ jobs:
         env:
           SANITY_AUTH_TOKEN: ${{ secrets.SANITY_AUTH_TOKEN }}
         with:
-          args: "./cairn-content-schema dataset export production backup.tar.gz"
-      - name: Upload backup.tar.gz
+          args: "./cairn-content-schema documents query '*' > ../_data/documents.json"
+      - name: Upload documents.json
         uses: actions/upload-artifact@v2
         with:
-          name: backup-tarball
-          path: backup.tar.gz
+          name: backup-documents-json
+          path: /_data/documents.json
           # Fails the workflow if no files are found; defaults to 'warn'
           if-no-files-found: error
   build:
