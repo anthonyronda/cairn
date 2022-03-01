@@ -7,6 +7,7 @@ color_scheme: light
 encoding: UTF-8
 plugins:
   - jekyll-redirect-from
+  - jekyll-datapage-generator
 include:
   - js
 exclude:
@@ -23,3 +24,12 @@ last_edit_time_format: "%b %e %Y at %I:%M %p" # uses ruby's time format: https:/
 
 # If you want to ignore the monsters folder during builds
 # exclude: /resources/monsters
+
+page_gen-dirs: true
+
+page_gen:
+  - data: documents
+    template: default
+    dir: "resources/monsters"
+    filter_condition: "record['_type'] ~~ 'npc'"
+    debug: true
