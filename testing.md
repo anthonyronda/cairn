@@ -24,4 +24,7 @@ Monsters
 {% endfor %}
 {% endfor %}
 
+{% endif %}
+{% endfor %}
+
 End monsters
